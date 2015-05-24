@@ -51,10 +51,12 @@ if(turretState == true){
           yRate = -yRate;
           turretBarrelY = 700 - turretBarrelY;
         }
+        println("hi");
         shotRunnerLow = true;
         UpDefault = true;
         LowDefault = false;
-      } else {
+      }
+       else if(corner == 1){
         if (turretBarrelY > 100) {
           yRate = -yRate;
           turretBarrelY = 700 - turretBarrelY;
@@ -62,7 +64,9 @@ if(turretState == true){
         shotRunnerUp = true;
         LowDefault = true;
         UpDefault = false;
-      }
+       }
+      
+      
       turretBulletX = turretBarrelX;
       turretBulletY = turretBarrelY;
 
@@ -71,7 +75,7 @@ if(turretState == true){
       else
         interval = 1;
     }
-
+}
 
     turretBulletX += xRate;
     turretBulletY += yRate;
@@ -84,28 +88,28 @@ if(turretState == true){
       }
     }
    }
-  }
-  void show(){
+ 
+  void drawTurret(){
     
     fill(0);
-  if (corner == 1) {
-    if (this.returnState()) {
-      ellipse(1000, 0, 125, 125);
-      line(1000, 0, 900, 40);
-   }
+  if (LowDefault) {
     if (BrTurret.returnState()) {
-      ellipse(1000, 700, 125, 125);
-      line(1000, 700, turretBarrelX, turretBarrelY);
-    }
-  }
-  if (corner == 2) {
-    if (this.returnState()) {
+      ellipse(1000, 0, 125, 125);
+      line(1000, 0, turretBarrelX, turretBarrelY);
+   }
+    if (UrTurret.returnState()) {
       ellipse(1000, 700, 125, 125);
       line(1000, 700, 900, 660);
     }
+  }
+  if (UpDefault) {
     if (UrTurret.returnState()) {
+      ellipse(1000, 700, 125, 125);
+      line(1000, 700, turretBarrelX, turretBarrelY);
+    }
+    if (BrTurret.returnState()) {
       ellipse(1000, 0, 125, 125);
-      line(1000, 0, turretBarrelX, turretBarrelY);
+      line(1000, 0, 900, 40);
     }
   }
   fill(255);
