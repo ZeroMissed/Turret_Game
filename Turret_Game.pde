@@ -1,9 +1,9 @@
-int personX, personY, frameCounter, turretBulletX, turretBulletY, bulletCounter, xRate, yRate, turretHealth1, turretHealth2, turretBarrelX, turretBarrelY, headX, headY, exitCounter, lazerX;
-boolean turretState1, turretState2, personState, shotRunnerUp, shotRunnerLow, LowDefault, UpDefault, targetState, exitState, loseState, winState;
+int personX, personY, frameCounter, turretBulletX, turretBulletY, bulletCounter, xRate, yRate, turretBarrelX, turretBarrelY, headX, headY, exitCounter, lazerX;
+boolean personState, shotRunnerUr, shotRunnerBr, brFiring, urFiring, targetState, exitState, loseState, winState;
 int intro = 1;
 int interval = 1;
-Turret UrTurret = new Turret(1);
-Turret BrTurret = new Turret(2);
+Turret urTurret = new Turret("ur", true, 100);
+Turret brTurret = new Turret("br", true, 100);
 void setup() 
 {
   background(255, 255, 255);
@@ -13,22 +13,22 @@ void setup()
 
 void draw()
 {
-  UrTurret.show();
-  BrTurret.show();
+  urTurret.show();
+  brTurret.show();
   if (loseState == true)
     gameEnd("lose");
-    
+
   if (winState == true) 
     gameEnd("win");
-    
+
   if (loseState == false && (winState == false))
     background(255);
 
   door();
   fill(0);
-  
-  
-  
+
+
+
   fill(255);
   if (intro < 60) {
     intro();
@@ -85,10 +85,10 @@ void draw()
       stroke(0, 0, 0); 
       if (mouseX < 1000 && (mouseX > 955)) 
         if (mouseY < 40 && (mouseY > 0)) 
-          turretHealth1--;
+          urTurret.removeHealth(1);
       if (mouseX < 1000 && (mouseX > 955)) 
         if (mouseY < 700 && (mouseY > 660)) 
-          turretHealth2--;
+          brTurret.removeHealth(1);
     }
 
     popMatrix();
@@ -116,39 +116,38 @@ void draw()
 
   if (frameCounter > 400) {
     frameCounter = 0;
-    UrTurret.shoot();
+    urTurret.shoot();
   }
 
-  if (shotRunnerUp == true) {
-    
-    UrTurret.shoot();
+  if (shotRunnerUr) {
+    urTurret.shoot();
     bulletCounter++;
   }
 
   if (frameCounter == 200) {
     frameCounter++;
-    BrTurret.shoot();
-  }
-   else
+    brTurret.shoot();
+  } else
     frameCounter++;
 
-  if (shotRunnerLow == true) {
-    if (turretState2 == true)
-      BrTurret.shoot();
+  if (shotRunnerBr) {
+    brTurret.shoot();
     bulletCounter++;
   }
 
   if (bulletCounter == 150) {
-    shotRunnerUp = false;
-    shotRunnerLow = false;
+    shotRunnerUr = false;
+    shotRunnerBr = false;
     bulletCounter = 0;
   }
 
- 
+
   if (exitState == true) 
     exitCounter++;
   if (exitCounter == 200)
     exit();
   intro++;
+  urTurret.show();
+  brTurret.show();
 }
 

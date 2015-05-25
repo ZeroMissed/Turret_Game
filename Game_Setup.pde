@@ -13,8 +13,6 @@ void door() {
 }
 
 void intro() {
-  turretHealth1 = 100;
-  turretHealth2 = 100;
   personState = true;
   targetState = true;
   fill(0);
@@ -28,8 +26,8 @@ void gameEnd(String winLose) {
   exitState = true;
   targetState = false;
   personState = false;
-  turretHealth1 = 0;
-  turretHealth2 = 0;
+  urTurret.removeHealth(100);
+  brTurret.removeHealth(100);
   if (winLose == "lose") {
     fill(255, 0, 0);
     background(0);
