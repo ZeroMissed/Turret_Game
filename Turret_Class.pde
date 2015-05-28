@@ -166,10 +166,9 @@ class Turret {
     stroke(0, 255, 0);
     line(turretBarrelX, turretBarrelY, turretBulletX, turretBulletY);
     stroke(0);
-    if (turretBulletX < headX + 15 && (turretBulletX > headX - 15)) {
+    if (turretBulletX < headX + 15 && (turretBulletX > headX - 15)) 
       if (turretBulletY < headY + 17 && (turretBulletY > headY - 17)) 
         loseState = true;
-    }
   }
 }
 

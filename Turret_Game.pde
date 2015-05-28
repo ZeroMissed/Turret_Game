@@ -6,33 +6,33 @@ Turret urTurret = new Turret("ur", true, 100);
 Turret ulTurret = new Turret("ul", true, 100);
 Turret brTurret = new Turret("br", true, 100);
 Turret blTurret = new Turret("bl", true, 100);
+Door topDoor = new Door("top");
+Door bottomDoor = new Door("bottom");
+Door leftDoor = new Door("left");
+Door rightDoor = new Door("right");
+Door door = new Door("none");
 void setup() 
 {
   background(255, 255, 255);
   size(1000, 700);
   frameRate(60);
-  personX = 442;
-  personY = -4;
+  personX = 475;
+  personY = -180;
+  topDoor.chooseDoor();
 }
 
 void draw()
 {
   if (loseState == true)
-    gameEnd("lose");
+    gameEnd(0);
 
   if (winState == true) 
-    gameEnd("win");
+    gameEnd(1);
 
   if (loseState == false && winState == false)
     background(255);
 
-  door();
-  fill(0);
-
-
-
-  fill(255);
-  if (intro < 60) {
+  if (intro < 120) {
     intro();
   }
 
@@ -99,6 +99,7 @@ void draw()
           ulTurret.removeHealth(1);
     }
 
+
     popMatrix();
     if (targetState == true) {
       fill(255);
@@ -120,7 +121,7 @@ void draw()
       }
     }
   }
-  
+
 
   if (exitState == true) 
     exitCounter++;
@@ -128,7 +129,7 @@ void draw()
     exit();
 
   intro++;
-  
+
   urTurret.shoot();
   ulTurret.shoot();
   brTurret.shoot();
@@ -137,5 +138,10 @@ void draw()
   ulTurret.show();
   brTurret.show();
   blTurret.show();
+  topDoor.show();
+  bottomDoor.show();
+  leftDoor.show();
+  rightDoor.show();
+  door.checkDoors();
 }
 

@@ -1,16 +1,4 @@
-void door() {
-  headX = 50 + personX;
-  headY = 600 + personY;
-  fill(0);
-  rect(980, 180, 20, 40);
-  rect(980, 480, 20, 40);
-  fill(255);
-  if (headX > 1050) {
-    if (headY > 329 && (headY < 371)) {
-      winState = true;
-    }
-  }
-}
+
 
 void intro() {
   personState = true;
@@ -22,7 +10,7 @@ void intro() {
   fill(255);
 }
 
-void gameEnd(String winLose) {
+void gameEnd(int winLose) {
   exitState = true;
   targetState = false;
   personState = false;
@@ -30,14 +18,14 @@ void gameEnd(String winLose) {
   ulTurret.removeHealth(100);
   brTurret.removeHealth(100);
   blTurret.removeHealth(100);
-  if (winLose == "lose") {
+  if (winLose == 0) {
     fill(255, 0, 0);
     background(0);
     textSize(100);
     text("You Lose", 275, 400);
     fill(0);
   }
-  if (winLose == "win") {
+  if (winLose == 1) {
     fill(0, 255, 0);
     background(0);
     textSize(100);
