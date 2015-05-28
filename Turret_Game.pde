@@ -1,27 +1,29 @@
 int personX, personY, frameCounter, turretBulletX, turretBulletY, bulletCounter, xRate, yRate, turretBarrelX, turretBarrelY, headX, headY, exitCounter, lazerX;
-boolean personState, shotRunnerUr, shotRunnerBr, brFiring, urFiring, targetState, exitState, loseState, winState;
+boolean personState, targetState, exitState, loseState, winState;
 int intro = 1;
-int interval = 1;
+int interval = (int)random(3) + 1;
 Turret urTurret = new Turret("ur", true, 100);
+Turret ulTurret = new Turret("ul", true, 100);
 Turret brTurret = new Turret("br", true, 100);
+Turret blTurret = new Turret("bl", true, 100);
 void setup() 
 {
   background(255, 255, 255);
   size(1000, 700);
   frameRate(60);
+  personX = 442;
+  personY = -4;
 }
 
 void draw()
 {
-  urTurret.show();
-  brTurret.show();
   if (loseState == true)
     gameEnd("lose");
 
   if (winState == true) 
     gameEnd("win");
 
-  if (loseState == false && (winState == false))
+  if (loseState == false && winState == false)
     background(255);
 
   door();
@@ -89,6 +91,12 @@ void draw()
       if (mouseX < 1000 && (mouseX > 955)) 
         if (mouseY < 700 && (mouseY > 660)) 
           brTurret.removeHealth(1);
+      if (mouseX < 5 && (mouseX > 0)) 
+        if (mouseY < 700 && (mouseY > 660)) 
+          blTurret.removeHealth(1);
+      if (mouseX < 5 && (mouseX > 0)) 
+        if (mouseY < 40 && (mouseY > 0)) 
+          ulTurret.removeHealth(1);
     }
 
     popMatrix();
@@ -112,42 +120,22 @@ void draw()
       }
     }
   }
-
-
-  if (frameCounter > 400) {
-    frameCounter = 0;
-    urTurret.shoot();
-  }
-
-  if (shotRunnerUr) {
-    urTurret.shoot();
-    bulletCounter++;
-  }
-
-  if (frameCounter == 200) {
-    frameCounter++;
-    brTurret.shoot();
-  } else
-    frameCounter++;
-
-  if (shotRunnerBr) {
-    brTurret.shoot();
-    bulletCounter++;
-  }
-
-  if (bulletCounter == 150) {
-    shotRunnerUr = false;
-    shotRunnerBr = false;
-    bulletCounter = 0;
-  }
-
+  
 
   if (exitState == true) 
     exitCounter++;
   if (exitCounter == 200)
     exit();
+
   intro++;
+  
+  urTurret.shoot();
+  ulTurret.shoot();
+  brTurret.shoot();
+  blTurret.shoot();
   urTurret.show();
+  ulTurret.show();
   brTurret.show();
+  blTurret.show();
 }
 

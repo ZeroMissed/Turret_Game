@@ -27,7 +27,9 @@ void gameEnd(String winLose) {
   targetState = false;
   personState = false;
   urTurret.removeHealth(100);
+  ulTurret.removeHealth(100);
   brTurret.removeHealth(100);
+  blTurret.removeHealth(100);
   if (winLose == "lose") {
     fill(255, 0, 0);
     background(0);

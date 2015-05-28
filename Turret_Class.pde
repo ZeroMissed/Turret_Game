@@ -1,12 +1,13 @@
-
 class Turret {
   String corner;
   int turretHealth;
-  boolean turretState;
+  boolean turretState, shotRunner, firing;
   Turret(String corner, boolean turretState, int turretHealth) {
     this.corner = corner;
     this.turretState = turretState;
     this.turretHealth = turretHealth;
+    this.shotRunner = shotRunner;
+    this.firing = firing;
   }
 
   void checkHealth() {
@@ -21,105 +22,154 @@ class Turret {
     return turretState;
   }
 
+  void makeOnlyShotRunner() {
+    urTurret.shotRunner = false;
+    ulTurret.shotRunner = false;
+    brTurret.shotRunner = false;
+    blTurret.shotRunner = false;
+    shotRunner = true;
+  }
+
   void removeHealth(int numberToRemove) {
     turretHealth -= numberToRemove;
+    this.checkHealth();
   }
 
   void shoot() {
-    headX = 50 + personX;
-    headY = 600 + personY;
-    if (turretState == true) {
-      if (shotRunnerUr == false && shotRunnerBr == false) {
-        switch(interval) {
-        case 1:
-          turretBarrelX = 900;
-          turretBarrelY = 40;
-          xRate = -10;
-          yRate = 4;
-          break;
 
-        case 2:
-          turretBarrelX = 935;
-          turretBarrelY = 85;
-          xRate = -6;
-          yRate = 8;
-          break;
+    if (frameCounter == 60) {
+      frameCounter++;
+      urTurret.move();
+    } 
 
-        case 3:
-          turretBarrelX = 917;
-          turretBarrelY = 63;
-          xRate = -8;
-          yRate = 6;
-          break;
-        }
+    if (frameCounter == 160) {
+      frameCounter++;
+      ulTurret.move();
+    }
+    if (frameCounter == 260) {
+      frameCounter++;
+      brTurret.move();
+    } 
 
-        if (corner == "br") {
-          if (yRate > 0) {
-            yRate = -yRate;
-            turretBarrelY = 700 - turretBarrelY;
-          }
-          shotRunnerBr = true;
-          urFiring = true;
-          brFiring = false;
-        } 
-        if (corner == "ur") {
-          if (turretBarrelY > 100) {
-            yRate = -yRate;
-            turretBarrelY = 700 - turretBarrelY;
-          }
-          shotRunnerUr = true;
-          brFiring = true;
-          urFiring = false;
-        }
-        turretBulletX = turretBarrelX;
-        turretBulletY = turretBarrelY;
+    if (frameCounter == 360) {
+      frameCounter = 0;
+      blTurret.move();
+    }
 
-        if (interval < 4)
-          interval++;
-        else
-          interval = 1;
-      }
-
-
-      turretBulletX += xRate;
-      turretBulletY += yRate;
-      stroke(0, 255, 0);
-      line(turretBarrelX, turretBarrelY, turretBulletX, turretBulletY);
-      stroke(0);
-      if (turretBulletX < headX + 15 && (turretBulletX > headX - 15)) {
-        if (turretBulletY < headY + 17 && (turretBulletY > headY - 17)) {
-          loseState = true;
-        }
+    if (bulletCounter >= 100) {
+      urTurret.shotRunner = false;
+      ulTurret.shotRunner = false;
+      brTurret.shotRunner = false;
+      blTurret.shotRunner = false;
+      bulletCounter = 0;
+    }
+    if (turretState) {
+      if (shotRunner) {
+        this.move();
+        this.takeShot();
+        bulletCounter++;
       }
     }
+    frameCounter++;
   }
+
   void show() {
     fill(0);
-  if (urFiring) {
-    if (corner == "ur") {
-      if (urTurret.returnState()) {
-        ellipse(1000, 0, 125, 125);
-        line(1000, 0, 900, 40);
-      }
-      if (brTurret.returnState()) {
-        ellipse(1000, 700, 125, 125);
-        line(1000, 700, turretBarrelX, turretBarrelY);
-      }
+    int xMod = 0;
+    int yMod = 0;
+    int xDef = 0;
+    int yDef = 0;
+    if (corner == "ul") {
+      xMod = -1000;
+      xDef = -800;
     }
-  }
-  if (brFiring){ 
     if (corner == "br") {
-      if (brTurret.returnState()) {
-        ellipse(1000, 700, 125, 125);
-        line(1000, 700, 900, 660);
+      yMod = 700;
+      yDef = 620;
+    }
+    if (corner == "bl") {
+      xMod = -1000;
+      yMod = 700;
+      xDef = -800;
+      yDef = 620;
+    }
+    if (shotRunner) {
+      ellipse(1000 + xMod, 0 + yMod, 125, 125);
+      line(1000 + xMod, 0 + yMod, turretBarrelX, turretBarrelY);
+    } else {
+      ellipse(1000 + xMod, 0 + yMod, 125, 125);
+      line(1000 + xMod, 0 + yMod, 900 + xDef, 40 + yDef);
+    }
+    fill(255);
+  }
+
+  void move() {
+    if (urTurret.shotRunner == false && ulTurret.shotRunner == false && brTurret.shotRunner == false && blTurret.shotRunner == false) {
+      switch(interval) {
+
+      case 1:
+        turretBarrelX = 900;
+        turretBarrelY = 40;
+        xRate = -20;
+        yRate = 8;
+        break;
+
+      case 2:
+        turretBarrelX = 935;
+        turretBarrelY = 85;
+        xRate = -12;
+        yRate = 16;
+        break;
+
+      case 3:
+        turretBarrelX = 917;
+        turretBarrelY = 63;
+        xRate = -16;
+        yRate = 12;
+        break;
       }
-      if (urTurret.returnState()) {
-        ellipse(1000, 0, 125, 125);
-        line(1000, 0, turretBarrelX, turretBarrelY);
+
+      if (interval == 3)
+        interval = 1;
+      else
+        interval++;
+
+      this.makeOnlyShotRunner();
+
+      if (corner == "ul") {
+        xRate = -xRate;
+        turretBarrelX = 1000 - turretBarrelX;
       }
+
+      if (corner == "br") {
+        yRate = -yRate;
+        turretBarrelY = 700 - turretBarrelY;
+      }
+
+      if (corner == "bl") {
+        xRate = -xRate;
+        turretBarrelX = 1000 - turretBarrelX;
+        yRate = -yRate;
+        turretBarrelY = 700 - turretBarrelY;
+      }
+
+      turretBulletX = turretBarrelX;
+      turretBulletY = turretBarrelY;
     }
   }
-    fill(255);
+
+  void takeShot() {
+    headX = 50 + personX;
+    headY = 600 + personY;
+    turretBulletX += xRate;
+    turretBulletY += yRate;
+    stroke(0, 255, 0);
+    line(turretBarrelX, turretBarrelY, turretBulletX, turretBulletY);
+    stroke(0);
+    if (turretBulletX < headX + 15 && (turretBulletX > headX - 15)) {
+      if (turretBulletY < headY + 17 && (turretBulletY > headY - 17)) 
+        loseState = true;
+    }
   }
 }
 
