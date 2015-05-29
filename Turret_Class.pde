@@ -39,20 +39,24 @@ class Turret {
 
     if (frameCounter == 60) {
       frameCounter++;
+      if(urTurret.returnState())
       urTurret.move();
     } 
 
     if (frameCounter == 160) {
       frameCounter++;
+      if(ulTurret.returnState())
       ulTurret.move();
     }
     if (frameCounter == 260) {
       frameCounter++;
+      if(brTurret.returnState())
       brTurret.move();
     } 
 
     if (frameCounter == 360) {
       frameCounter = 0;
+      if(blTurret.returnState())
       blTurret.move();
     }
 
@@ -93,6 +97,7 @@ class Turret {
       xDef = -800;
       yDef = 620;
     }
+    if (turretState){
     if (shotRunner) {
       ellipse(1000 + xMod, 0 + yMod, 125, 125);
       line(1000 + xMod, 0 + yMod, turretBarrelX, turretBarrelY);
@@ -101,6 +106,7 @@ class Turret {
       line(1000 + xMod, 0 + yMod, 900 + xDef, 40 + yDef);
     }
     fill(255);
+    }
   }
 
   void move() {

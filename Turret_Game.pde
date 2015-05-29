@@ -54,7 +54,7 @@ void draw()
 
     int distX = personX + 50 - mouseX;
     int distY = personY + 639 - mouseY;
-    float mouseS = personY + personX + 50 + sqrt(sq(mouseX - (personX + 50)) + sq((height - mouseY) - (personY + height - 635)));
+    float mouseS = personX + 50 + sqrt(sq(mouseX - (personX + 50)) + sq(mouseY - (personY + 635)));
 
     pushMatrix();
 
@@ -85,17 +85,17 @@ void draw()
       line(GunBarrelX, GunBarrelY, mouseS, GunBarrelY);
 
       stroke(0, 0, 0); 
-      if (mouseX < 1000 && (mouseX > 955)) 
-        if (mouseY < 40 && (mouseY > 0)) 
+      if (mouseX < 1000 && mouseX > 950) 
+        if (mouseY < 40 && mouseY > 0) 
           urTurret.removeHealth(1);
-      if (mouseX < 1000 && (mouseX > 955)) 
-        if (mouseY < 700 && (mouseY > 660)) 
+      if (mouseX < 1000 && mouseX > 950) 
+        if (mouseY < 700 && mouseY > 660) 
           brTurret.removeHealth(1);
-      if (mouseX < 5 && (mouseX > 0)) 
-        if (mouseY < 700 && (mouseY > 660)) 
+      if (mouseX < 50 && mouseX > 0) 
+        if (mouseY < 700 && mouseY > 650) 
           blTurret.removeHealth(1);
-      if (mouseX < 5 && (mouseX > 0)) 
-        if (mouseY < 40 && (mouseY > 0)) 
+      if (mouseX < 50 && mouseX > 0) 
+        if (mouseY < 50 && mouseY > 0) 
           ulTurret.removeHealth(1);
     }
 
