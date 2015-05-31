@@ -1,8 +1,9 @@
 class Turret {
-  String corner;
-  int turretHealth;
-  boolean turretState, shotRunner, firing;
-  Turret(String corner, boolean turretState, int turretHealth) {
+  private int turretHealth, xRate, yRate, turretBarrelX, turretBarrelY, turretBulletX, turretBulletY, bulletCounter, headX;
+  private boolean turretState, shotRunner, firing;
+  private String corner;
+
+  public Turret(String corner, boolean turretState, int turretHealth) {
     this.corner = corner;
     this.turretState = turretState;
     this.turretHealth = turretHealth;
@@ -10,11 +11,31 @@ class Turret {
     this.firing = firing;
   }
 
+  void showAndShootAll() {
+    urTurret.show();
+    ulTurret.show();
+    brTurret.show();
+    blTurret.show();
+    urTurret.shoot();
+    ulTurret.shoot();
+    brTurret.shoot();
+    blTurret.shoot();
+  }
+  void setShotRunner(boolean trueFalse) {
+    shotRunner = trueFalse;
+  }
+  void removeHealth(int numberToRemove) {
+    turretHealth -= numberToRemove;
+    this.checkHealth();
+  }
+
   void checkHealth() {
     if (turretHealth > 0) 
       turretState = true;
-    else 
+    else {
       turretState = false;
+      shotRunner = false;
+    }
   }
 
   boolean returnState() {
@@ -23,50 +44,38 @@ class Turret {
   }
 
   void makeOnlyShotRunner() {
-    urTurret.shotRunner = false;
-    ulTurret.shotRunner = false;
-    brTurret.shotRunner = false;
-    blTurret.shotRunner = false;
+    urTurret.setShotRunner(false);
+    ulTurret.setShotRunner(false);
+    brTurret.setShotRunner(false);
+    blTurret.setShotRunner(false);
     shotRunner = true;
   }
 
-  void removeHealth(int numberToRemove) {
-    turretHealth -= numberToRemove;
-    this.checkHealth();
-  }
-
   void shoot() {
-
-    if (frameCounter == 60) {
-      frameCounter++;
-      if(urTurret.returnState())
+    
+    if (frameCounter == 60) 
       urTurret.move();
-    } 
 
-    if (frameCounter == 160) {
-      frameCounter++;
-      if(ulTurret.returnState())
+    if (frameCounter == 160) 
       ulTurret.move();
-    }
-    if (frameCounter == 260) {
-      frameCounter++;
-      if(brTurret.returnState())
+
+    if (frameCounter == 260) 
       brTurret.move();
-    } 
 
     if (frameCounter == 360) {
       frameCounter = 0;
-      if(blTurret.returnState())
       blTurret.move();
     }
 
+    frameCounter++; 
     if (bulletCounter >= 100) {
-      urTurret.shotRunner = false;
-      ulTurret.shotRunner = false;
-      brTurret.shotRunner = false;
-      blTurret.shotRunner = false;
+      urTurret.setShotRunner(false);
+      ulTurret.setShotRunner(false);
+      brTurret.setShotRunner(false);
+      blTurret.setShotRunner(false);
       bulletCounter = 0;
     }
+
     if (turretState) {
       if (shotRunner) {
         this.move();
@@ -74,7 +83,6 @@ class Turret {
         bulletCounter++;
       }
     }
-    frameCounter++;
   }
 
   void show() {
@@ -97,76 +105,78 @@ class Turret {
       xDef = -800;
       yDef = 620;
     }
-    if (turretState){
-    if (shotRunner) {
-      ellipse(1000 + xMod, 0 + yMod, 125, 125);
-      line(1000 + xMod, 0 + yMod, turretBarrelX, turretBarrelY);
-    } else {
-      ellipse(1000 + xMod, 0 + yMod, 125, 125);
-      line(1000 + xMod, 0 + yMod, 900 + xDef, 40 + yDef);
-    }
-    fill(255);
+    if (turretState) {
+      if (shotRunner) {
+        ellipse(1000 + xMod, 0 + yMod, 125, 125);
+        line(1000 + xMod, 0 + yMod, turretBarrelX, turretBarrelY);
+      } else {
+        ellipse(1000 + xMod, 0 + yMod, 125, 125);
+        line(1000 + xMod, 0 + yMod, 900 + xDef, 40 + yDef);
+      }
+      fill(255);
     }
   }
 
   void move() {
-    if (urTurret.shotRunner == false && ulTurret.shotRunner == false && brTurret.shotRunner == false && blTurret.shotRunner == false) {
-      switch(interval) {
+    if (turretState) {
+      if (urTurret.shotRunner == false && ulTurret.shotRunner == false && brTurret.shotRunner == false && blTurret.shotRunner == false) {
+        switch(interval) {
 
-      case 1:
-        turretBarrelX = 900;
-        turretBarrelY = 40;
-        xRate = -20;
-        yRate = 8;
-        break;
+        case 1:
+          turretBarrelX = 900;
+          turretBarrelY = 40;
+          xRate = -20;
+          yRate = 8;
+          break;
 
-      case 2:
-        turretBarrelX = 935;
-        turretBarrelY = 85;
-        xRate = -12;
-        yRate = 16;
-        break;
+        case 2:
+          turretBarrelX = 935;
+          turretBarrelY = 85;
+          xRate = -12;
+          yRate = 16;
+          break;
 
-      case 3:
-        turretBarrelX = 917;
-        turretBarrelY = 63;
-        xRate = -16;
-        yRate = 12;
-        break;
+        case 3:
+          turretBarrelX = 917;
+          turretBarrelY = 63;
+          xRate = -16;
+          yRate = 12;
+          break;
+        }
+
+        if (interval == 3)
+          interval = 1;
+        else
+          interval++;
+
+        this.makeOnlyShotRunner();
+
+        if (corner == "ul") {
+          xRate = -xRate;
+          turretBarrelX = 1000 - turretBarrelX;
+        }
+
+        if (corner == "br") {
+          yRate = -yRate;
+          turretBarrelY = 700 - turretBarrelY;
+        }
+
+        if (corner == "bl") {
+          xRate = -xRate;
+          turretBarrelX = 1000 - turretBarrelX;
+          yRate = -yRate;
+          turretBarrelY = 700 - turretBarrelY;
+        }
+
+        turretBulletX = turretBarrelX;
+        turretBulletY = turretBarrelY;
       }
-
-      if (interval == 3)
-        interval = 1;
-      else
-        interval++;
-
-      this.makeOnlyShotRunner();
-
-      if (corner == "ul") {
-        xRate = -xRate;
-        turretBarrelX = 1000 - turretBarrelX;
-      }
-
-      if (corner == "br") {
-        yRate = -yRate;
-        turretBarrelY = 700 - turretBarrelY;
-      }
-
-      if (corner == "bl") {
-        xRate = -xRate;
-        turretBarrelX = 1000 - turretBarrelX;
-        yRate = -yRate;
-        turretBarrelY = 700 - turretBarrelY;
-      }
-
-      turretBulletX = turretBarrelX;
-      turretBulletY = turretBarrelY;
     }
   }
 
   void takeShot() {
-    headX = 50 + personX;
-    headY = 600 + personY;
+  int headX = person.returnHeadLoc("x");
+    int headY = person.returnHeadLoc("y");
     turretBulletX += xRate;
     turretBulletY += yRate;
     stroke(0, 255, 0);

@@ -12,8 +12,7 @@ void intro() {
 
 void gameEnd(int winLose) {
   exitState = true;
-  targetState = false;
-  personState = false;
+  person.setState(false);
   urTurret.removeHealth(100);
   ulTurret.removeHealth(100);
   brTurret.removeHealth(100);

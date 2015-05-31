@@ -1,13 +1,16 @@
 class Door {
   private String side;
-  
-  Door(String side) {
+
+  public Door(String side) {
     this.side = side;
   }
-
+  void showAll() {
+    topDoor.show();
+    bottomDoor.show();
+    leftDoor.show();
+    rightDoor.show();
+  }
   void show() {
-    headX = 50 + personX;
-    headY = 600 + personY;
     int doorX;
     int doorY;
     fill(0);
@@ -28,11 +31,9 @@ class Door {
       rect(doorX, 180, 20, 40);
       rect(doorX, 480, 20, 40);
     }
-
-    fill(255);
-    if (headX > 1050 && headY > 240 && (headY < 392))
-      winState = true;
+    noFill();
   }
+
   void chooseDoor() {
     switch((int)random(4)) {
     case 0: 
@@ -50,22 +51,24 @@ class Door {
     }
   }
 
-    void checkDoors() {
-      if (door == topDoor)
-        if (headY < -70 && headX > 360 && headX < 640)
-          winState = true;
+  void checkDoors() {
+    int headX = person.returnHeadLoc("x");
+    int headY = person.returnHeadLoc("y");
+    if (door == topDoor)
+      if (headY < -70 && headX > 360 && headX < 640)
+        winState = true;
 
-      if (door == bottomDoor)
-        if (headY > 770 && headX > 360 && headX < 640)
-          winState = true;
+    if (door == bottomDoor)
+      if (headY > 770 && headX > 360 && headX < 640)
+        winState = true;
 
-      if (door == leftDoor)
-        if (headX < -50 && headY > 240 && headY < 392)
-          winState = true;
+    if (door == leftDoor)
+      if (headX < -50 && headY > 240 && headY < 392)
+        winState = true;
 
-      if (door == rightDoor)
-        if (headX > 1050 && headY > 240 && headY < 392)
-          winState = true;
-    }
+    if (door == rightDoor)
+      if (headX > 1050 && headY > 240 && headY < 392)
+        winState = true;
   }
+}
 
