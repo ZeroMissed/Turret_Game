@@ -1,7 +1,8 @@
 class Person {
-  private int personX, personY, speed, headX, headY, gunBarrelX, gunBarrelY;
+  private int personX, personY, speed, headX, headY, gunBarrelX, gunBarrelY, legCounter;
   private boolean personState;
-
+  private int frontLegX = 60; 
+  private int backLegX = 40; 
   public Person(int personX, int personY, int speed, boolean personState) {
     this.personX = personX;
     this.personY = personY;
@@ -29,8 +30,8 @@ class Person {
       //creates man
       ellipse(headX, headY, 34, 40);
       line(50 + personX, 620 + personY, 50 + personX, 655 + personY);
-      line(50 + personX, 655 + personY, 40 + personX, 690 + personY);
-      line(50 + personX, 655 + personY, 60 + personX, 690 + personY);
+      line(50 + personX, 655 + personY, backLegX + personX, 690 + personY);
+      line(50 + personX, 655 + personY, frontLegX + personX, 690 + personY);
 
       //creates gun and moves gun
       int distX = personX + 50 - mouseX;
@@ -85,7 +86,29 @@ class Person {
         personY += speed;
       if (key == 'd') 
         personX += speed;
+        
+        if (key == 'w' || key == 'a' || key == 's' || key == 'd'){
+       this.moveLegs(); 
+       println("hi");
+        }
     }
+  }
+  
+  void moveLegs(){
+    if(legCounter == 0){
+      frontLegX = 70;
+      backLegX = 30;
+    }
+    if(legCounter == 1){
+      frontLegX = 60;
+      backLegX = 40;
+    }
+    if(legCounter == 2){
+      frontLegX = 50;
+      backLegX = 50;
+      legCounter = 0;
+    }
+    legCounter++;
   }
   void shoot() {
     //makes sure the line gets to the mouse bc line y has to be equal to barrel y
