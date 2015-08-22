@@ -52,7 +52,7 @@ class Turret {
   }
 
   void shoot() {
-    
+
     if (frameCounter == 60) 
       urTurret.move();
 
@@ -91,6 +91,10 @@ class Turret {
     int yMod = 0;
     int xDef = 0;
     int yDef = 0;
+    int hpBarX = 890;
+    int hpBarY = 6;
+    
+    
     if (corner == "ul") {
       xMod = -1000;
       xDef = -800;
@@ -113,13 +117,17 @@ class Turret {
         ellipse(1000 + xMod, 0 + yMod, 125, 125);
         line(1000 + xMod, 0 + yMod, 900 + xDef, 40 + yDef);
       }
-      fill(255);
+      smooth();
+      rect(hpBarX, hpBarY, 67, 7, 5);
+      fill(255, 0, 0);
+      rect(hpBarX, hpBarY, turretHealth/3, 7, 5);
+      fill(0);
     }
   }
 
   void move() {
     if (turretState) {
-      if (urTurret.shotRunner == false && ulTurret.shotRunner == false && brTurret.shotRunner == false && blTurret.shotRunner == false) {
+      if (!urTurret.shotRunner && !ulTurret.shotRunner && !brTurret.shotRunner && !blTurret.shotRunner) {
         switch(interval) {
 
         case 1:
@@ -175,7 +183,7 @@ class Turret {
   }
 
   void takeShot() {
-  int headX = person.returnHeadLoc("x");
+    int headX = person.returnHeadLoc("x");
     int headY = person.returnHeadLoc("y");
     turretBulletX += xRate;
     turretBulletY += yRate;

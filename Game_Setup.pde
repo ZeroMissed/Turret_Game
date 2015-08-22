@@ -6,7 +6,7 @@ void intro() {
   fill(0);
   textSize(20);
   text("Welcome to the Turret Game", 370, 250);
-  text("You must destroy both turrets and walk through the door", 225, 300);
+  text("You must destroy the turrets and walk through the door", 225, 300);
   fill(255);
 }
 

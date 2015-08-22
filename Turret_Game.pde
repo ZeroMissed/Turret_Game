@@ -6,9 +6,6 @@ Turret urTurret = new Turret("ur", true, 200);
 Turret ulTurret = new Turret("ul", true, 200);
 Turret brTurret = new Turret("br", true, 200);
 Turret blTurret = new Turret("bl", true, 200);
-Door topDoor = new Door("top");
-Door bottomDoor = new Door("bottom");
-Door leftDoor = new Door("left");
 Door rightDoor = new Door("right");
 Door door = new Door("none");
 Person person = new Person(459, -168, 3, true);
@@ -17,7 +14,7 @@ void setup()
   background(255, 255, 255);
   size(1000, 700);
   frameRate(60);
-  topDoor.chooseDoor();
+  rightDoor.chooseDoor();
 }
 
 void draw()
@@ -45,7 +42,7 @@ void draw()
   
   urTurret.showAndShootAll();
   door.checkDoors();
-  door.showAll();
+  rightDoor.show();
 
   intro++;
 }

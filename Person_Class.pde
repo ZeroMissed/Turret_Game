@@ -89,7 +89,6 @@ class Person {
         
         if (key == 'w' || key == 'a' || key == 's' || key == 'd'){
        this.moveLegs(); 
-       println("hi");
         }
     }
   }

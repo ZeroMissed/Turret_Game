@@ -1,14 +1,9 @@
 class Door {
   private String side;
+  private int doorCount;
 
   public Door(String side) {
     this.side = side;
-  }
-  void showAll() {
-    topDoor.show();
-    bottomDoor.show();
-    leftDoor.show();
-    rightDoor.show();
   }
   void show() {
     int doorX;
@@ -35,7 +30,9 @@ class Door {
   }
 
   void chooseDoor() {
-    switch((int)random(4)) {
+    door = rightDoor;
+   
+  /*  switch((int)random(4)) {
     case 0: 
       door = topDoor;
       break;
@@ -49,12 +46,13 @@ class Door {
       door = rightDoor;
       break;
     }
+    */
   }
 
   void checkDoors() {
     int headX = person.returnHeadLoc("x");
     int headY = person.returnHeadLoc("y");
-    if (door == topDoor)
+  /*  if (door == topDoor)
       if (headY < -70 && headX > 360 && headX < 640)
         winState = true;
 
@@ -65,7 +63,7 @@ class Door {
     if (door == leftDoor)
       if (headX < -50 && headY > 240 && headY < 392)
         winState = true;
-
+*/
     if (door == rightDoor)
       if (headX > 1050 && headY > 240 && headY < 392)
         winState = true;
