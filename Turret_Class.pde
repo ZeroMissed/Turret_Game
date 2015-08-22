@@ -98,16 +98,21 @@ class Turret {
     if (corner == "ul") {
       xMod = -1000;
       xDef = -800;
+      hpBarX = 10;
+      
     }
     if (corner == "br") {
       yMod = 700;
       yDef = 620;
+      hpBarY = 690;
     }
     if (corner == "bl") {
       xMod = -1000;
       yMod = 700;
       xDef = -800;
       yDef = 620;
+      hpBarX = 10;
+      hpBarY = 690;
     }
     if (turretState) {
       if (shotRunner) {
@@ -118,9 +123,9 @@ class Turret {
         line(1000 + xMod, 0 + yMod, 900 + xDef, 40 + yDef);
       }
       smooth();
-      rect(hpBarX, hpBarY, 67, 7, 5);
+      rect(hpBarX, hpBarY, 100, 7, 5);
       fill(255, 0, 0);
-      rect(hpBarX, hpBarY, turretHealth/3, 7, 5);
+      rect(hpBarX, hpBarY, turretHealth/2, 7, 5);
       fill(0);
     }
   }
