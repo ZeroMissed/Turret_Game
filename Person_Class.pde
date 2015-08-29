@@ -53,7 +53,7 @@ class Person {
 
       translate(-(personX + 50), -(personY + 635));
 
-      //draw arm and gun
+      //draw arm and gunss
       line(50 + personX, 635 + personY, 65 + personX, 635 + personY); //arm of man
       strokeWeight(3);
       line(65 + personX, 639 + personY, 65 + personX, 630 + personY); // gun handle

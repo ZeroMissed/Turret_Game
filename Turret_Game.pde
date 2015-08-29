@@ -1,5 +1,6 @@
 int frameCounter, headY, exitCounter, lazerX;
 boolean personState, targetState, exitState, loseState, winState;
+float  bulletMult = 1;
 int intro = 1;
 int interval = (int)random(3) + 1;
 Turret urTurret = new Turret("ur", true, 200);
@@ -19,6 +20,7 @@ void setup()
 
 void draw()
 {
+  bulletMult+=.001;
   if (loseState == true)
     gameEnd(0);
 

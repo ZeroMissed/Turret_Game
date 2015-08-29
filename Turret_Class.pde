@@ -1,7 +1,8 @@
 class Turret {
-  private int turretHealth, xRate, yRate, turretBarrelX, turretBarrelY, turretBulletX, turretBulletY, bulletCounter, headX;
+  private int turretHealth, turretBarrelX, turretBarrelY, turretBulletX, turretBulletY, bulletCounter, headX;
   private boolean turretState, shotRunner, firing;
   private String corner;
+  private float  xRate, yRate;
 
   public Turret(String corner, boolean turretState, int turretHealth) {
     this.corner = corner;
@@ -131,6 +132,8 @@ class Turret {
   }
 
   void move() {
+    int headX = person.returnHeadLoc("x");
+    int headY = person.returnHeadLoc("y");
     if (turretState) {
       if (!urTurret.shotRunner && !ulTurret.shotRunner && !brTurret.shotRunner && !blTurret.shotRunner) {
         switch(interval) {
@@ -138,22 +141,16 @@ class Turret {
         case 1:
           turretBarrelX = 900;
           turretBarrelY = 40;
-          xRate = -20;
-          yRate = 8;
           break;
 
         case 2:
           turretBarrelX = 935;
           turretBarrelY = 85;
-          xRate = -12;
-          yRate = 16;
           break;
 
         case 3:
           turretBarrelX = 917;
           turretBarrelY = 63;
-          xRate = -16;
-          yRate = 12;
           break;
         }
 
@@ -163,23 +160,27 @@ class Turret {
           interval++;
 
         this.makeOnlyShotRunner();
-
+       
         if (corner == "ul") {
-          xRate = -xRate;
           turretBarrelX = 1000 - turretBarrelX;
         }
+        
 
         if (corner == "br") {
-          yRate = -yRate;
+          
           turretBarrelY = 700 - turretBarrelY;
         }
 
         if (corner == "bl") {
-          xRate = -xRate;
           turretBarrelX = 1000 - turretBarrelX;
-          yRate = -yRate;
           turretBarrelY = 700 - turretBarrelY;
         }
+        yRate = (bulletMult * (turretBarrelY - headY))/50;
+        xRate = (bulletMult * (turretBarrelX - headX))/50;
+        yRate = -yRate;
+        xRate = -xRate;
+        println(xRate);
+        println(yRate);
 
         turretBulletX = turretBarrelX;
         turretBulletY = turretBarrelY;
