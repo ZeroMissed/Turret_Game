@@ -1,5 +1,5 @@
 class Turret {
-  private int turretHealth, turretBarrelX, turretBarrelY, turretBulletX, turretBulletY, bulletCounter, headX;
+  private int turretHealth, turretBBulletX, turretBBulletY, turretBarrelX, turretBarrelY, turretBulletX, turretBulletY, bulletCounter, headX;
   private boolean turretState, shotRunner, firing;
   private String corner;
   private float  xRate, yRate;
@@ -184,6 +184,8 @@ class Turret {
 
         turretBulletX = turretBarrelX;
         turretBulletY = turretBarrelY;
+        turretBBulletX = turretBarrelX;
+        turretBBulletY = turretBarrelY;
       }
     }
   }
@@ -193,8 +195,12 @@ class Turret {
     int headY = person.returnHeadLoc("y");
     turretBulletX += xRate;
     turretBulletY += yRate;
+    if(bulletCounter > 5) {
+    turretBBulletX += xRate;
+    turretBBulletY += yRate;
+    }
     stroke(0, 255, 0);
-    line(turretBarrelX, turretBarrelY, turretBulletX, turretBulletY);
+    line(turretBBulletX, turretBBulletY, turretBulletX, turretBulletY);
     stroke(0);
     if (turretBulletX < headX + 15 && (turretBulletX > headX - 15)) 
       if (turretBulletY < headY + 17 && (turretBulletY > headY - 17)) 
