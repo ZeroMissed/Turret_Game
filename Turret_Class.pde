@@ -1,26 +1,24 @@
 class Turret {
-  private int turretHealth, turretBBulletX, turretBBulletY, turretBarrelX, turretBarrelY, turretBulletX, turretBulletY, bulletCounter, headX;
+  private int turretHealth, bulletCounter;
   private boolean turretState, shotRunner, firing;
   private String corner;
-  private float  xRate, yRate;
+  private float  xRate, yRate, turretBBulletX, turretBBulletY, turretBulletX, turretBulletY, turretBarrelX, turretBarrelY;
 
   public Turret(String corner, boolean turretState, int turretHealth) {
     this.corner = corner;
     this.turretState = turretState;
     this.turretHealth = turretHealth;
-    this.shotRunner = shotRunner;
-    this.firing = firing;
   }
 
   void showAndShootAll() {
-    urTurret.show();
-    ulTurret.show();
-    brTurret.show();
-    blTurret.show();
     urTurret.shoot();
     ulTurret.shoot();
     brTurret.shoot();
     blTurret.shoot();
+    urTurret.show();
+    ulTurret.show();
+    brTurret.show();
+    blTurret.show();
   }
   void setShotRunner(boolean trueFalse) {
     shotRunner = trueFalse;
@@ -87,42 +85,55 @@ class Turret {
   }
 
   void show() {
+    int headX = person.returnHeadLoc("x");
+    int headY = person.returnHeadLoc("y");
     fill(0);
-    int xMod = 0;
-    int yMod = 0;
-    int xDef = 0;
-    int yDef = 0;
+    int xLoc = 0;
+    int yLoc = 0;
     int hpBarX = 890;
     int hpBarY = 6;
-    
-    
-    if (corner == "ul") {
-      xMod = -1000;
-      xDef = -800;
+
+    if (corner == "ur") 
+      xLoc = 1000;
+
+    if (corner == "ul") 
       hpBarX = 10;
-      
-    }
+
     if (corner == "br") {
-      yMod = 700;
-      yDef = 620;
+      xLoc = 1000;
+      yLoc = 700;
       hpBarY = 690;
     }
     if (corner == "bl") {
-      xMod = -1000;
-      yMod = 700;
-      xDef = -800;
-      yDef = 620;
+      yLoc = 700;
       hpBarX = 10;
       hpBarY = 690;
     }
     if (turretState) {
-      if (shotRunner) {
-        ellipse(1000 + xMod, 0 + yMod, 125, 125);
-        line(1000 + xMod, 0 + yMod, turretBarrelX, turretBarrelY);
-      } else {
-        ellipse(1000 + xMod, 0 + yMod, 125, 125);
-        line(1000 + xMod, 0 + yMod, 900 + xDef, 40 + yDef);
+      ellipse(xLoc, yLoc, 125, 125);
+
+      int distX = xLoc - headX;
+      int distY = yLoc - headY;
+
+      //pushes current xy plain
+      pushMatrix();
+
+      translate(xLoc, yLoc);
+
+      float angle = atan((distY + .01) / (distX +.01));
+
+      if (distX < 0) {
+        angle += PI;
       }
+      angle += PI;
+      //rotates the xyplain to point gun towards the mouse
+      rotate(angle);
+
+      translate(-xLoc, -yLoc);
+      line(xLoc, yLoc, xLoc + 100, yLoc);
+      //reverts to pushed xy plain
+      popMatrix();
+
       smooth();
       rect(hpBarX, hpBarY, 100, 7, 5);
       fill(255, 0, 0);
@@ -136,51 +147,22 @@ class Turret {
     int headY = person.returnHeadLoc("y");
     if (turretState) {
       if (!urTurret.shotRunner && !ulTurret.shotRunner && !brTurret.shotRunner && !blTurret.shotRunner) {
-        switch(interval) {
-
-        case 1:
-          turretBarrelX = 900;
-          turretBarrelY = 40;
-          break;
-
-        case 2:
-          turretBarrelX = 935;
-          turretBarrelY = 85;
-          break;
-
-        case 3:
-          turretBarrelX = 917;
-          turretBarrelY = 63;
-          break;
-        }
-
-        if (interval == 3)
-          interval = 1;
-        else
-          interval++;
-
         this.makeOnlyShotRunner();
-       
-        if (corner == "ul") {
-          turretBarrelX = 1000 - turretBarrelX;
-        }
-        
+        turretBarrelX = 0;
+        turretBarrelY = 0;
+        if (corner == "ur")
+          turretBarrelX = 1000;
 
         if (corner == "br") {
-          
-          turretBarrelY = 700 - turretBarrelY;
+          turretBarrelX = 1000;
+          turretBarrelY = 700;
         }
 
-        if (corner == "bl") {
-          turretBarrelX = 1000 - turretBarrelX;
-          turretBarrelY = 700 - turretBarrelY;
-        }
-        yRate = (bulletMult * (turretBarrelY - headY))/50;
-        xRate = (bulletMult * (turretBarrelX - headX))/50;
-        yRate = -yRate;
-        xRate = -xRate;
-        println(xRate);
-        println(yRate);
+        if (corner == "bl") 
+          turretBarrelY = 700;
+
+        yRate = -(bulletMult * (turretBarrelY - headY))/50;
+        xRate = -(bulletMult * (turretBarrelX - headX))/50;
 
         turretBulletX = turretBarrelX;
         turretBulletY = turretBarrelY;
@@ -195,9 +177,9 @@ class Turret {
     int headY = person.returnHeadLoc("y");
     turretBulletX += xRate;
     turretBulletY += yRate;
-    if(bulletCounter > 5) {
-    turretBBulletX += xRate;
-    turretBBulletY += yRate;
+    if (bulletCounter > 5) {
+      turretBBulletX += xRate;
+      turretBBulletY += yRate;
     }
     stroke(0, 255, 0);
     line(turretBBulletX, turretBBulletY, turretBulletX, turretBulletY);
@@ -207,4 +189,3 @@ class Turret {
         loseState = true;
   }
 }
-
