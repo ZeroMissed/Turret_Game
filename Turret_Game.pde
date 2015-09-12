@@ -1,8 +1,12 @@
 int frameCounter, headY, exitCounter, lazerX;
 boolean personState, targetState, exitState, loseState, winState;
 float  bulletMult = 1;
-int intro = 1;
-int interval = (int)random(3) + 1;
+PImage TGLogo;
+boolean gameStart = false;
+boolean rules = false;
+Button BPlay = new Button(350, 200, "Play Game");
+Button BRules = new Button(350, 235, "How to Play");
+Button BBack = new Button(20, 20, "Back");
 Turret urTurret = new Turret("ur", true, 200);
 Turret ulTurret = new Turret("ul", true, 200);
 Turret brTurret = new Turret("br", true, 200);
@@ -12,40 +16,34 @@ Door door = new Door("none");
 Person person = new Person(459, -168, 3, true);
 void setup() 
 {
-  background(255, 255, 255);
-  size(1000, 700);
+  TGLogo = loadImage("TG.png");
+  TGLogo.resize(1000, 700);
+  personState = true;
+  targetState = true;
   frameRate(60);
   rightDoor.chooseDoor();
+  size(1000, 700);
 }
 
-void draw()
-{
-  bulletMult+=.001;
-  if (loseState == true)
-    gameEnd(0);
+void draw(){
+ background(255);
+  if (!gameStart && !rules) {
+    background(TGLogo);
+    
+    BPlay.show();
+    BRules.show();
 
-  if (winState == true) 
-    gameEnd(1);
-
-  if (loseState == false && winState == false)
-    background(255);
-
-  if (intro < 120) {
-    intro();
+    if (BRules.checkHitBox())
+      rules = true;
+    if (BPlay.checkHitBox())
+      gameStart = true;
+  } else if (rules) {
+    showRules();
+    BBack.show();
+    if(BBack.checkHitBox())
+       rules = false;
   }
-
-  if (exitState == true) 
-    exitCounter++;
-  if (exitCounter == 200)
-    exit();
-
-  person.move();
-  person.showAndShoot();
-  
-  urTurret.showAndShootAll();
-  door.checkDoors();
-  rightDoor.show();
-
-  intro++;
+  else if (gameStart){
+    gameRunner();
 }
 
