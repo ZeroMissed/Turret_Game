@@ -11,11 +11,11 @@ public class Button {
 
 
   void show() {
-    if(!rules) {
+    if(!rules)
     fill(180, 0, 0);
-  }
     else
     noFill();
+    
     rect(bx, by, 100, 25, 4);
     fill(0);
     pushMatrix();
@@ -28,11 +28,12 @@ public class Button {
 
   boolean checkHitBox() {
     boolean tf = false;
-    if (mousePressed) 
+    if (mousePressed) {
       if (mouseX < bx + 100 && mouseX > bx && mouseY < by + 25 && mouseY > by)
         tf = true;
+    }
         return tf;
-  }
+}
 }
 
 void showRules() {
@@ -62,16 +63,15 @@ void gameRunner(){
     exitCounter++;
   if (exitCounter == 200)
     exit();
-
+  
   person.move();
   person.showAndShoot();
-  
   urTurret.showAndShootAll();
-  door.checkDoors();
+  rightDoor.checkDoor();
   rightDoor.show();
 }
 
-void gameEnd(int win) {
+void gameEnd(boolean win) {
   exitState = true;
   person.setState(false);
   urTurret.removeHealth(100);
@@ -79,18 +79,17 @@ void gameEnd(int win) {
   brTurret.removeHealth(100);
   blTurret.removeHealth(100);
   if (!win) {
-    fill(255, 0, 0);
     background(0);
     textSize(100);
-    text("You Lose", 275, 400);
+    fill(255, 0, 0);
+    text("Wasted", 500, 400);
     fill(0);
   }
-  if (winLose) {
+  if (win) {
     fill(0, 255, 0);
     background(0);
     textSize(100);
-    text("You Win", 275, 400);
+    text("You Win", 500, 400);
     fill(0);
   }
 }
-

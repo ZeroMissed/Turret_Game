@@ -20,6 +20,9 @@ class Person {
   void setState(boolean trueFalse){
     personState = trueFalse;
   }
+  boolean getState(){
+    return personState;
+  }
   void showAndShoot() {
     if (personState) {
       headY = 600 + personY;
@@ -60,7 +63,7 @@ class Person {
       line(65 + personX, 630 + personY, gunBarrelX, gunBarrelY); // gun barrel
       noFill();
       rect(65 + personX, 630 + personY, 4, 3); //trigger box
-
+      
       this.shoot();
 
       //reverts to pushed xy plain
@@ -135,4 +138,3 @@ class Person {
     }
   }
 }
-
