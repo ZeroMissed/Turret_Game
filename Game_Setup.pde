@@ -11,11 +11,7 @@ public class Button {
 
 
   void show() {
-    if(!rules)
     fill(180, 0, 0);
-    else
-    noFill();
-    
     rect(bx, by, 100, 25, 4);
     fill(0);
     pushMatrix();
@@ -23,7 +19,6 @@ public class Button {
     textAlign(CENTER);
     text(text, 0, 0);
     popMatrix();
-    this.checkHitBox();
   }
 
   boolean checkHitBox() {
@@ -39,12 +34,15 @@ public class Button {
 void showRules() {
   textSize(15);
   textAlign(CENTER);
-  text("How to Move", width/2, 280);
-  text("Use wasd to move up, left, down, and right", width/2, 300);
-  text("How to Shoot", width/2, 210);
-  text("Point your cursor and right click to shoot", width/2, 230);
-  text("How to Win", width/2, 150);
-  text("Move your player through the door", width/2, 170);
+  fill(180, 0, 0);
+  rect(330, 230, 340, 190);
+  fill(0);
+  text("How to Move", width/2, 380);
+  text("Use wasd to move up, left, down, and right", width/2, 400);
+  text("How to Shoot", width/2, 310);
+  text("Point your cursor and right click to shoot", width/2, 330);
+  text("How to Win", width/2, 250);
+  text("Move your player through the door", width/2, 270);
 }
 
 void gameRunner(){
@@ -78,6 +76,7 @@ void gameEnd(boolean win) {
   ulTurret.removeHealth(100);
   brTurret.removeHealth(100);
   blTurret.removeHealth(100);
+  textFont(loadFont("Font.vlw"));
   if (!win) {
     background(0);
     textSize(100);

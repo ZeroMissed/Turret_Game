@@ -24,24 +24,22 @@ void setup()
 }
 
 void draw(){
- background(255);
+  background(TGLogo);
   if (!gameStart && !rules) {
     background(TGLogo);
-    
     BPlay.show();
     BRules.show();
-
     if (BRules.checkHitBox())
       rules = true;
     if (BPlay.checkHitBox())
       gameStart = true;
-  } else if (rules) {
+  } 
+  else if (rules) {
     showRules();
     BBack.show();
     if(BBack.checkHitBox())
        rules = false;
   }
-  else if (gameStart){
+  else if (gameStart && !rules)
     gameRunner();
-}
 }
