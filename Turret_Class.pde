@@ -20,11 +20,25 @@ class Turret {
     brTurret.show();
     blTurret.show();
   }
+  void resetTurrets() {
+    urTurret.setHealth(200);
+    ulTurret.setHealth(200);
+    brTurret.setHealth(200);
+    blTurret.setHealth(200);
+    urTurret.bulletCounter = 0;
+    ulTurret.bulletCounter = 0;
+    urTurret.bulletCounter = 0;
+    urTurret.bulletCounter = 0;
+  }
   void setShotRunner(boolean trueFalse) {
     shotRunner = trueFalse;
   }
-  void removeHealth(int numberToRemove) {
-    turretHealth -= numberToRemove;
+  void setHealth(int h){
+    turretHealth = h;
+    this.checkHealth();
+  }
+  void changeHealth(int n) {
+    turretHealth += n;
     this.checkHealth();
   }
 
@@ -181,7 +195,16 @@ class Turret {
       turretBBulletX += xRate;
       turretBBulletY += yRate;
     }
-    stroke(0, 255, 0);
+    println(turretBulletY + ":" + turretBBulletY);
+
+    if (colorChange == 20) {
+      r = (int) random(255);
+      g = (int) random(255);
+      b = (int) random(255);
+      colorChange = 0;
+    }
+    colorChange++;
+    stroke(r, g, b);
     line(turretBBulletX, turretBBulletY, turretBulletX, turretBulletY);
     stroke(0);
     if (turretBulletX < headX + 15 && (turretBulletX > headX - 15)) 

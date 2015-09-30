@@ -16,7 +16,7 @@ class Door {
   void checkDoor() {
     int headX = person.returnHeadLoc("x");
     int headY = person.returnHeadLoc("y");
-      if (headX > 1050 && headY > 240 && headY < 392)
+      if (headX > 1050 && headY > 240 && headY < 392  && !blTurret.returnState() && !brTurret.returnState() && !ulTurret.returnState() && !urTurret.returnState())
         winState = true;
 }
 }

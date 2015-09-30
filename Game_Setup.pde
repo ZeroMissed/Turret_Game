@@ -17,6 +17,7 @@ public class Button {
     pushMatrix();
     translate(bx + 50, by + 18);
     textAlign(CENTER);
+    textSize(12);
     text(text, 0, 0);
     popMatrix();
   }
@@ -46,22 +47,31 @@ void showRules() {
 }
 
 void gameRunner(){
-   bulletMult+=.001;
-  if (loseState)
+   bulletMult+=.002;
+  if (loseState) {
     gameEnd(false);
-
+    winState = false;
+  }
   if (winState) 
-    gameEnd(true);
+    gameEnd(true); 
 
   if (loseState == false && winState == false)
     background(255);
 
 
-  if (exitState == true) 
-    exitCounter++;
-  if (exitCounter == 200)
-    exit();
-  
+  if (restartState == true) 
+    restartCounter++;
+  if (restartCounter >= 60) {
+    person.resetDef();
+    gameStart = false;
+    winState = false;
+    loseState = false;
+    bulletMult = 1;
+    restartState = false;
+    restartCounter = 0;
+    urTurret.resetTurrets();
+  }
+    
   person.move();
   person.showAndShoot();
   urTurret.showAndShootAll();
@@ -70,13 +80,12 @@ void gameRunner(){
 }
 
 void gameEnd(boolean win) {
-  exitState = true;
+  restartState = true;
   person.setState(false);
-  urTurret.removeHealth(100);
-  ulTurret.removeHealth(100);
-  brTurret.removeHealth(100);
-  blTurret.removeHealth(100);
-  textFont(loadFont("Font.vlw"));
+  urTurret.setHealth(0);
+  ulTurret.setHealth(0);
+  brTurret.setHealth(0);
+  blTurret.setHealth(0);
   if (!win) {
     background(0);
     textSize(100);

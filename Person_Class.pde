@@ -1,26 +1,32 @@
 class Person {
-  private int personX, personY, speed, headX, headY, gunBarrelX, gunBarrelY, legCounter;
+  private int personX, personY, headX, headY, gunBarrelX, gunBarrelY, legCounter;
+  private float speed;
   private boolean personState;
   private int frontLegX = 60; 
   private int backLegX = 40; 
-  public Person(int personX, int personY, int speed, boolean personState) {
+  public Person(int personX, int personY, float speed, boolean personState) {
     this.personX = personX;
     this.personY = personY;
     this.personState = personState;
     this.speed = speed;
   } 
-  
+
   int returnHeadLoc(String xy) {
     if (xy == "x")
       return headX;
     else
       return headY;
   }
-  
-  void setState(boolean trueFalse){
+
+  void setState(boolean trueFalse) {
     personState = trueFalse;
   }
-  boolean getState(){
+  void resetDef() {
+  personX = 459;
+  personY = -168;
+  personState = true;
+  }
+  boolean getState() {
     return personState;
   }
   void showAndShoot() {
@@ -29,7 +35,7 @@ class Person {
       headX = 50 + personX;
       gunBarrelX = 77 + personX;
       gunBarrelY = 630 + personY;
-      
+
       //creates man
       ellipse(headX, headY, 34, 40);
       line(50 + personX, 620 + personY, 50 + personX, 655 + personY);
@@ -63,7 +69,7 @@ class Person {
       line(65 + personX, 630 + personY, gunBarrelX, gunBarrelY); // gun barrel
       noFill();
       rect(65 + personX, 630 + personY, 4, 3); //trigger box
-      
+
       this.shoot();
 
       //reverts to pushed xy plain
@@ -80,34 +86,37 @@ class Person {
   }
 
   void move() {
-    if (keyPressed) {
-      if (key == 'w') 
-        personY -= speed;
-      if (key == 'a') 
-        personX -= speed;
-      if (key == 's') 
-        personY += speed;
-      if (key == 'd') 
-        personX += speed;
-        
-        if (key == 'w' || key == 'a' || key == 's' || key == 'd'){
-       this.moveLegs(); 
-        }
+    if (keys[0])
+      personY -= speed;
+    if (keys[1])
+      personX -= speed;
+    if (keys[2])
+      personY += speed;
+    if (keys[3])
+      personX += speed;
+
+    for (int i = 0; i <= 3; i++) {
+      if (keys[i])
+        person.moveLegs();
     }
   }
-  
-  void moveLegs(){
-    if(legCounter == 0){
+
+  void moveLegs() {
+    if (legCounter == 0) {
       frontLegX = 70;
       backLegX = 30;
     }
-    if(legCounter == 1){
+    if (legCounter == 1) {
+      frontLegX = 65;
+      backLegX = 35;
+    }
+    if (legCounter == 2) {
       frontLegX = 60;
       backLegX = 40;
     }
-    if(legCounter == 2){
-      frontLegX = 50;
-      backLegX = 50;
+    if (legCounter == 3) {
+      frontLegX = 55;
+      backLegX = 45;
       legCounter = 0;
     }
     legCounter++;
@@ -116,7 +125,7 @@ class Person {
     //makes sure the line gets to the mouse bc line y has to be equal to barrel y
     float mouseS = personX + 50 + sqrt(sq(mouseX - (personX + 50)) + sq(mouseY - (personY + 635)));
 
-    if (mousePressed == true && (mouseButton == LEFT)) {
+    if (mousePressed) {
       // Draw the red laser line
       stroke(255, 0, 0);
       line(gunBarrelX, gunBarrelY, mouseS, gunBarrelY);
@@ -125,16 +134,16 @@ class Person {
       //check if turrets are hit
       if (mouseX < 1000 && mouseX > 950) 
         if (mouseY < 40 && mouseY > 0) 
-          urTurret.removeHealth(1);
+          urTurret.changeHealth(-1);
       if (mouseX < 1000 && mouseX > 950) 
         if (mouseY < 700 && mouseY > 660) 
-          brTurret.removeHealth(1);
+          brTurret.changeHealth(-1);
       if (mouseX < 50 && mouseX > 0) 
         if (mouseY < 700 && mouseY > 650) 
-          blTurret.removeHealth(1);
+          blTurret.changeHealth(-1);
       if (mouseX < 50 && mouseX > 0) 
         if (mouseY < 50 && mouseY > 0) 
-          ulTurret.removeHealth(1);
+          ulTurret.changeHealth(-1);
     }
   }
 }
