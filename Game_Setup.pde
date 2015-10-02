@@ -47,7 +47,6 @@ void showRules() {
 }
 
 void gameRunner(){
-   bulletMult+=.002;
   if (loseState) {
     gameEnd(false);
     winState = false;

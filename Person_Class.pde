@@ -30,6 +30,8 @@ class Person {
     return personState;
   }
   void showAndShoot() {
+    if(speed > 3)
+    speed -= (1/1500);
     if (personState) {
       headY = 600 + personY;
       headX = 50 + personX;

@@ -15,7 +15,7 @@ Turret ulTurret = new Turret("ul", true, 200);
 Turret brTurret = new Turret("br", true, 200);
 Turret blTurret = new Turret("bl", true, 200);
 Door rightDoor = new Door("right");
-Person person = new Person(459, -168, 3, true);
+Person person = new Person(459, -168, 4, true);
 
 void setup() 
 {
@@ -45,7 +45,6 @@ void draw() {
 }
 
 void keyPressed() {
-  println("hi");
   if (key == 'w') 
     keys[0] = true;
   if (key == 'a') 

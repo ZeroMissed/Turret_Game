@@ -29,6 +29,7 @@ class Turret {
     ulTurret.bulletCounter = 0;
     urTurret.bulletCounter = 0;
     urTurret.bulletCounter = 0;
+    frameCounter = 0;
   }
   void setShotRunner(boolean trueFalse) {
     shotRunner = trueFalse;
@@ -195,7 +196,6 @@ class Turret {
       turretBBulletX += xRate;
       turretBBulletY += yRate;
     }
-    println(turretBulletY + ":" + turretBBulletY);
 
     if (colorChange == 20) {
       r = (int) random(255);
