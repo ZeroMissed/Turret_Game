@@ -11,10 +11,12 @@ class Turret {
   }
 
   void showAndShootAll() {
+    if(!startSequence) {
     urTurret.shoot();
     ulTurret.shoot();
     brTurret.shoot();
     blTurret.shoot();
+    }
     urTurret.show();
     ulTurret.show();
     brTurret.show();
@@ -39,6 +41,7 @@ class Turret {
     this.checkHealth();
   }
   void changeHealth(int n) {
+    if(!startSequence)
     turretHealth += n;
     this.checkHealth();
   }

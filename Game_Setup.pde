@@ -28,12 +28,11 @@ public class Button {
       if (mouseX < bx + 100 && mouseX > bx && mouseY < by + 25 && mouseY > by)
         tf = true;
     }
-        return tf;
-}
+    return tf;
+  }
 }
 
 void showRules() {
-  textSize(15);
   textAlign(CENTER);
   fill(180, 0, 0);
   rect(330, 230, 340, 190);
@@ -46,17 +45,45 @@ void showRules() {
   text("Move your player through the door", width/2, 270);
 }
 
-void gameRunner(){
+void gameRunner() {
   if (loseState) {
     gameEnd(false);
     winState = false;
   }
+
   if (winState) 
     gameEnd(true); 
 
   if (loseState == false && winState == false)
     background(255);
 
+  fill(255, 0, 0);
+  textSize(15);
+  textAlign(CENTER, CENTER);
+  if (mouseRun) {
+    text("Point your cursor at a target and click to shoot", width/2, 330);
+    if (abs(mouseX - 450) > 150 && mousePressed) {
+      keyRun = true;
+      mouseRun = false;
+    }
+  } else if (keyRun) {
+    text("Use wasd to move up, left, down, and right", width/2, 330);
+    for (int i = 0; i < 4; i++) {
+      if (keys[i]) 
+        keyCnt += i;
+      if (keyCnt >= 30) {
+        keyRun = false;
+        break;
+      }
+    }
+  } else {
+    if (startCount < 180) 
+      text("Move your player through the door to win", width/2, 330);
+    else
+      startSequence = false;
+    startCount++;
+  }
+  fill(255);
 
   if (restartState == true) 
     restartCounter++;
@@ -70,13 +97,14 @@ void gameRunner(){
     restartCounter = 0;
     urTurret.resetTurrets();
   }
-    
+
   person.move();
   person.showAndShoot();
   urTurret.showAndShootAll();
   rightDoor.checkDoor();
   rightDoor.show();
 }
+
 
 void gameEnd(boolean win) {
   restartState = true;
