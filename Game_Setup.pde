@@ -46,6 +46,7 @@ void showRules() {
 }
 
 void gameRunner() {
+  noCursor();
   if (loseState) {
     gameEnd(false);
     winState = false;
@@ -107,24 +108,27 @@ void gameRunner() {
 
 
 void gameEnd(boolean win) {
+  cursor();
+  noStroke();
   restartState = true;
   person.setState(false);
   urTurret.setHealth(0);
   ulTurret.setHealth(0);
   brTurret.setHealth(0);
   blTurret.setHealth(0);
+  textAlign(CENTER, CENTER);
   if (!win) {
     background(0);
     textSize(100);
     fill(255, 0, 0);
-    text("Wasted", 500, 400);
+    text("Wasted", 500, 350);
     fill(0);
   }
   if (win) {
     fill(0, 255, 0);
     background(0);
     textSize(100);
-    text("You Win", 500, 400);
+    text("You Win", 500, 350);
     fill(0);
   }
 }
