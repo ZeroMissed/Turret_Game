@@ -42,7 +42,7 @@ void showRules() {
   text("How to Shoot", width/2, 310);
   text("Point your cursor and right click to shoot", width/2, 330);
   text("How to Win", width/2, 250);
-  text("Move your player through the door", width/2, 270);
+  text("Destroy all the turrets and navigate through the gate", width/2, 270);
 }
 
 void gameRunner() {
@@ -79,8 +79,10 @@ void gameRunner() {
     }
   } else {
     if (startCount < 180) 
-      text("Move your player through the door to win", width/2, 330);
-    else
+      text("Destroy all the turrets and navigate through the gate to win", width/2, 330);
+    else if (startCount < 420) {
+      countDown();
+    } else
       startSequence = false;
     startCount++;
   }
@@ -89,6 +91,8 @@ void gameRunner() {
   if (restartState == true) 
     restartCounter++;
   if (restartCounter >= 60) {
+    startSequence = true;
+    startCount = 180;
     person.resetDef();
     gameStart = false;
     winState = false;
@@ -104,6 +108,24 @@ void gameRunner() {
   urTurret.showAndShootAll();
   rightDoor.checkDoor();
   rightDoor.show();
+}
+
+void countDown() {
+  fill(255, 0, 0);
+  textSize(50);
+  textAlign(CENTER, CENTER);
+  pushStyle();
+
+  if (startCount < 240) 
+    text("3", width/2, height/2);
+  else if (startCount < 300) 
+    text("2", width/2, height/2);
+  else if (startCount < 360) 
+    text("1", width/2, height/2);
+  else if (startCount < 420) 
+    text("GO!", width/2, height/2);
+
+  popStyle();
 }
 
 

@@ -134,17 +134,17 @@ class Person {
       stroke(0, 0, 0); 
 
       //check if turrets are hit
-      if (mouseX < 1000 && mouseX > 950) 
-        if (mouseY < 40 && mouseY > 0) 
+      if (mouseX < 1000 && mouseX > 925) 
+        if (mouseY < 75 && mouseY > 0) 
           urTurret.changeHealth(-1);
-      if (mouseX < 1000 && mouseX > 950) 
-        if (mouseY < 700 && mouseY > 660) 
+      if (mouseX < 1000 && mouseX > 925) 
+        if (mouseY < 700 && mouseY > 625) 
           brTurret.changeHealth(-1);
       if (mouseX < 50 && mouseX > 0) 
-        if (mouseY < 700 && mouseY > 650) 
+        if (mouseY < 700 && mouseY > 625) 
           blTurret.changeHealth(-1);
-      if (mouseX < 50 && mouseX > 0) 
-        if (mouseY < 50 && mouseY > 0) 
+      if (mouseX < 75 && mouseX > 0) 
+        if (mouseY < 75 && mouseY > 0) 
           ulTurret.changeHealth(-1);
     }
   }
